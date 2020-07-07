@@ -18,9 +18,16 @@ def get_all_messages():
     return "<br>".join(messages)
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
     """Main page with instructions"""
+
+    if request.method == "POST":
+        session["username"] = request.form["username"]
+
+    if "username" in session:
+        return redirect(session["username"])
+
     return render_template("index.html")
 
 
